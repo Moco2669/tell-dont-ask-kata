@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using TellDontAskKata.Main.Domain;
+﻿using TellDontAskKata.Main.Domain;
 using TellDontAskKata.Main.Repository;
 
 namespace TellDontAskKata.Main.UseCase
@@ -30,16 +29,11 @@ namespace TellDontAskKata.Main.UseCase
                 }
                 else
                 {
-                    order.AddItems(new OrderItem(product, itemRequest));
+                    order.AddItem(new OrderItem(product, itemRequest));
                 }
             }
 
             _orderRepository.Save(order);
-        }
-
-        private static decimal Round(decimal amount)
-        {
-            return decimal.Round(amount, 2, System.MidpointRounding.ToPositiveInfinity);
         }
     }
 }

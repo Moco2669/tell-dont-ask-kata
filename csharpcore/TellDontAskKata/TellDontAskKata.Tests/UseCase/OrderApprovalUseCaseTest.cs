@@ -23,7 +23,6 @@ namespace TellDontAskKata.Tests.UseCase
         {
             var initialOrder = new Order
             {
-                Status = OrderStatus.Created,
                 Id = 1
             };
             _orderRepository.AddOrder(initialOrder);
@@ -45,7 +44,6 @@ namespace TellDontAskKata.Tests.UseCase
         {
             var initialOrder = new Order
             {
-                Status = OrderStatus.Created,
                 Id = 1
             };
             _orderRepository.AddOrder(initialOrder);

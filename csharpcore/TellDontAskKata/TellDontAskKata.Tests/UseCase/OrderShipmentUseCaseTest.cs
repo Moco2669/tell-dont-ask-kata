@@ -25,9 +25,9 @@ namespace TellDontAskKata.Tests.UseCase
         {
             var initialOrder = new Order
             {
-                Status = OrderStatus.Approved,
                 Id = 1
             };
+            initialOrder.Approve(true);
             _orderRepository.AddOrder(initialOrder);
 
             var request = new OrderShipmentRequest
@@ -46,7 +46,6 @@ namespace TellDontAskKata.Tests.UseCase
         {
             var initialOrder = new Order
             {
-                Status = OrderStatus.Created,
                 Id = 1
             };
             _orderRepository.AddOrder(initialOrder);
