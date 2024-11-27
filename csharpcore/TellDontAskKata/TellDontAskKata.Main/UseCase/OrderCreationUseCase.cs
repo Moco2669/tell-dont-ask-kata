@@ -1,5 +1,6 @@
 ﻿using TellDontAskKata.Main.Domain;
 using TellDontAskKata.Main.Repository;
+using TellDontAskKata.Main.Exception;
 
 namespace TellDontAskKata.Main.UseCase
 {
@@ -20,17 +21,10 @@ namespace TellDontAskKata.Main.UseCase
         {
             var order = new Order();
 
-            foreach(var itemRequest in request.Requests){
+            foreach(var itemRequest in request.Requests)
+            {
                 var product = _productCatalog.GetByName(itemRequest.ProductName);
-
-                if (product == null)
-                {
-                    throw new UnknownProductException();
-                }
-                else
-                {
-                    order.AddItem(new OrderItem(product, itemRequest));
-                }
+                order.AddItem(new OrderItem(product, itemRequest));
             }
 
             _orderRepository.Save(order);

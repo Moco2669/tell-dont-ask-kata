@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TellDontAskKata.Main.Exception;
 
 namespace TellDontAskKata.Main.Domain
 {
@@ -8,7 +9,7 @@ namespace TellDontAskKata.Main.Domain
         public string Currency { get; }
         public IList<OrderItem> Items { get; }
         public decimal Tax { get; set; }
-        public OrderStatus Status { get; set; }
+        public OrderStatus Status { get; private set; }
         public int Id { get; set; }
 
         public Order()
@@ -33,6 +34,10 @@ namespace TellDontAskKata.Main.Domain
             {
                 Status = approved ? OrderStatus.Approved : OrderStatus.Rejected;
             }
+            else
+            {
+                throw new RejectedOrderCannotBeApprovedException();
+            }
         }
 
         public void Ship()
@@ -40,6 +45,10 @@ namespace TellDontAskKata.Main.Domain
             if (Status == OrderStatus.Approved)
             {
                 Status = OrderStatus.Shipped;
+            }
+            else
+            {
+                throw new OrderCannotBeShippedException();
             }
         }
     }

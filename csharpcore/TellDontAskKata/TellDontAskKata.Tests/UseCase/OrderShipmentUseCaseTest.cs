@@ -2,6 +2,7 @@
 using TellDontAskKata.Main.Domain;
 using TellDontAskKata.Main.UseCase;
 using TellDontAskKata.Tests.Doubles;
+using TellDontAskKata.Main.Exception;
 using Xunit;
 
 namespace TellDontAskKata.Tests.UseCase
@@ -67,9 +68,9 @@ namespace TellDontAskKata.Tests.UseCase
         {
             var initialOrder = new Order
             {
-                Status = OrderStatus.Rejected,
                 Id = 1
             };
+            initialOrder.Approve(false);
             _orderRepository.AddOrder(initialOrder);
 
             var request = new OrderShipmentRequest
@@ -89,9 +90,10 @@ namespace TellDontAskKata.Tests.UseCase
         {
             var initialOrder = new Order
             {
-                Status = OrderStatus.Shipped,
                 Id = 1
             };
+            initialOrder.Approve(true);
+            initialOrder.Ship();
             _orderRepository.AddOrder(initialOrder);
 
             var request = new OrderShipmentRequest

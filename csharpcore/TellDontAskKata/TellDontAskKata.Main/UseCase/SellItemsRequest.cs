@@ -4,6 +4,11 @@ namespace TellDontAskKata.Main.UseCase
 {
     public class SellItemsRequest
     {
-        public IList<SellItemRequest> Requests { get; set; }
+        public IList<SellItemRequest> Requests { get; } = new List<SellItemRequest>();
+
+        public void AddRequest(SellItemRequest request)
+        {
+            Requests.Add(request);
+        }
     }
 }

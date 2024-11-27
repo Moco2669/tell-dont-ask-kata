@@ -4,6 +4,7 @@ using TellDontAskKata.Main.Domain;
 using TellDontAskKata.Main.Repository;
 using TellDontAskKata.Main.UseCase;
 using TellDontAskKata.Tests.Doubles;
+using TellDontAskKata.Main.Exception;
 using Xunit;
 
 namespace TellDontAskKata.Tests.UseCase
@@ -11,7 +12,6 @@ namespace TellDontAskKata.Tests.UseCase
     public class OrderCreationUseCaseTest
     {
         private readonly TestOrderRepository _orderRepository;
-        private readonly IProductCatalog _productCatalog;
         private readonly OrderCreationUseCase _useCase;
 
         public OrderCreationUseCaseTest()
@@ -21,7 +21,7 @@ namespace TellDontAskKata.Tests.UseCase
                 TaxPercentage = 10m
             };
 
-            _productCatalog = new InMemoryProductCatalog(new List<Product>
+            IProductCatalog productCatalog = new InMemoryProductCatalog(new List<Product>
             {
                 new Product
                 {
@@ -39,29 +39,19 @@ namespace TellDontAskKata.Tests.UseCase
 
             _orderRepository = new TestOrderRepository();
 
-            _useCase = new OrderCreationUseCase(_orderRepository, _productCatalog);
+            _useCase = new OrderCreationUseCase(_orderRepository, productCatalog);
         }
 
 
         [Fact]
         public void SellMultipleItems()
         {
-            var saladRequest = new SellItemRequest
-            {
-                ProductName = "salad",
-                Quantity = 2
-            };
+            var saladRequest = new SellItemRequest("salad", 2);
+            var tomatoRequest = new SellItemRequest("tomato", 3);
 
-            var tomatoRequest = new SellItemRequest
-            {
-                ProductName = "tomato",
-                Quantity = 3
-            };
-
-            var request = new SellItemsRequest
-            {
-                Requests = new List<SellItemRequest> { saladRequest, tomatoRequest }
-            };
+            var request = new SellItemsRequest();
+            request.AddRequest(tomatoRequest);
+            request.AddRequest(saladRequest);
 
             _useCase.Run(request);
 
@@ -86,19 +76,12 @@ namespace TellDontAskKata.Tests.UseCase
         [Fact]
         public void UnknownProduct()
         {
-            var request = new SellItemsRequest
-            {
-                Requests = new List<SellItemRequest> { 
-                    new SellItemRequest { ProductName = "unknown product"}
-                }
-            };
+            var request = new SellItemsRequest();
+            request.Requests.Add(new SellItemRequest("unknown product", 3 ));
 
             Action actionToTest = () => _useCase.Run(request);
 
             Assert.Throws<UnknownProductException>(actionToTest);
         }
-
-
-
     }
 }
