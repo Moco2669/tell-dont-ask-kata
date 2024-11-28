@@ -36,7 +36,7 @@ namespace TellDontAskKata.Main.Domain
             }
             else
             {
-                throw new RejectedOrderCannotBeApprovedException();
+                throw new WrongOrderStatusOnApproveException(Status, approved);
             }
         }
 
@@ -48,7 +48,7 @@ namespace TellDontAskKata.Main.Domain
             }
             else
             {
-                throw new OrderCannotBeShippedException();
+                throw new OrderShipException(Status);
             }
         }
     }

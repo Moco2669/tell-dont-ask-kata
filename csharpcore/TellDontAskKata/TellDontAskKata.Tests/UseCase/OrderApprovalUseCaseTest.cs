@@ -81,7 +81,7 @@ namespace TellDontAskKata.Tests.UseCase
 
             Action actionToTest = () => _useCase.Run(request);
       
-            Assert.Throws<RejectedOrderCannotBeApprovedException>(actionToTest);
+            Assert.Throws<WrongOrderStatusOnApproveException>(actionToTest);
             Assert.Null(_orderRepository.GetSavedOrder());
         }
 
@@ -104,7 +104,7 @@ namespace TellDontAskKata.Tests.UseCase
 
             Action actionToTest = () => _useCase.Run(request);
             
-            Assert.Throws<ApprovedOrderCannotBeRejectedException>(actionToTest);
+            Assert.Throws<WrongOrderStatusOnApproveException>(actionToTest);
             Assert.Null(_orderRepository.GetSavedOrder());
         }
 
@@ -127,7 +127,7 @@ namespace TellDontAskKata.Tests.UseCase
 
             Action actionToTest = () => _useCase.Run(request);
 
-            Assert.Throws<ShippedOrdersCannotBeChangedException>(actionToTest);
+            Assert.Throws<WrongOrderStatusOnApproveException>(actionToTest);
             Assert.Null(_orderRepository.GetSavedOrder());
         }
 
