@@ -115,6 +115,7 @@ namespace TellDontAskKata.Tests.UseCase
             {
                 Id = 1
             };
+            initialOrder.Approve(true);
             initialOrder.Ship();
             _orderRepository.AddOrder(initialOrder);
 

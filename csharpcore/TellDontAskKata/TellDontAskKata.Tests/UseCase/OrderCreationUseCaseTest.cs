@@ -50,8 +50,8 @@ namespace TellDontAskKata.Tests.UseCase
             var tomatoRequest = new SellItemRequest("tomato", 3);
 
             var request = new SellItemsRequest();
-            request.AddRequest(tomatoRequest);
             request.AddRequest(saladRequest);
+            request.AddRequest(tomatoRequest);
 
             _useCase.Run(request);
 

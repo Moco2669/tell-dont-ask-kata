@@ -1,4 +1,5 @@
-﻿using TellDontAskKata.Main.UseCase;
+﻿using TellDontAskKata.Main.Service;
+using TellDontAskKata.Main.UseCase;
 
 namespace TellDontAskKata.Main.Domain
 {
@@ -13,8 +14,8 @@ namespace TellDontAskKata.Main.Domain
         {
             Product = product;
             Quantity = itemRequest.Quantity;
-            Tax = decimal.Round(product.UnitaryTaxAmount * itemRequest.Quantity);
-            TaxedAmount = decimal.Round(product.UnitaryTax * itemRequest.Quantity);
+            Tax = PriceService.RoundToTwoDigits(product.UnitaryTax * itemRequest.Quantity);
+            TaxedAmount = PriceService.RoundToTwoDigits(product.UnitaryTaxAmount * itemRequest.Quantity);
         }
     }
 }
