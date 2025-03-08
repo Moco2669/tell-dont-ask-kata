@@ -21,6 +21,11 @@ namespace TellDontAskKata.Main.Domain
             Items = new List<OrderItem>();
         }
 
+        public Order(int id) : this()
+        {
+            Id = id;
+        }
+
         public void AddItem(OrderItem item)
         {
             Items.Add(item);
@@ -28,15 +33,21 @@ namespace TellDontAskKata.Main.Domain
             Total += item.TaxedAmount;
         }
 
-        public void Approve(bool approved)
+        public void Approve(bool toApprove)
         {
             if (Status == OrderStatus.Created)
             {
-                Status = approved ? OrderStatus.Approved : OrderStatus.Rejected;
+                if (toApprove)
+                {
+                    Status = OrderStatus.Approved;
+                    return;
+                }
+
+                Status = OrderStatus.Rejected;
             }
             else
             {
-                throw new WrongOrderStatusOnApproveException(Status, approved);
+                throw new WrongOrderStatusOnApproveException(Status, toApprove);
             }
         }
 
