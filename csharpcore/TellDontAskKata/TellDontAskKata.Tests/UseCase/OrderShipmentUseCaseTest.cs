@@ -27,7 +27,7 @@ namespace TellDontAskKata.Tests.UseCase
         {
             var initialOrder = AnOrderWith(AnOrderId);
             initialOrder.Approve(true);
-            
+
             _orderRepository.AddOrder(initialOrder);
 
             var request = AnOrderShipmentRequestWithOrderIdMatching(initialOrder);
@@ -116,7 +116,5 @@ namespace TellDontAskKata.Tests.UseCase
             Assert.Null(_orderRepository.GetSavedOrder());
             Assert.Null(_shipmentService.GetShippedOrder());
         }
-
-
     }
 }
